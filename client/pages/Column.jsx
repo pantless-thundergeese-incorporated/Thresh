@@ -81,6 +81,7 @@ const Column = ({ colName, droppableId, column, getTodos }) => {
                   title={item.title}
                   text={item.text}
                   getTodos={getTodos}
+                  // user={item.user}
                 />
               );
             })}

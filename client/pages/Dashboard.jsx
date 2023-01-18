@@ -68,7 +68,8 @@ const Dashboard = () => {
   const getTodos = async () => {
     try {
       const response = await axios.get('/api/tasks');
-      // console.log('RES DATAAA: ', response.data)
+      console.log('RES DATAAA: ', response.data);
+      
       setColumns({
         ['tasks']: {
           name: 'To Do',
