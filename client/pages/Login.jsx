@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import loginRequest from '../api/loginRequest';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { useCookies } from 'react-cookie';
 
 export const Login = () => {
   // useState to update and track the input fields from the login page

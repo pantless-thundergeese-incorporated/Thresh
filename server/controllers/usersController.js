@@ -53,6 +53,7 @@ usersController.getUser = async (req, res, next) => {
         const response = await db.query(text, values);
         // storing input into res.locals.oneUser, response.rows is an array with one object
         res.locals.oneUser = response.rows[0];
+        console.log('oneUser: ', res.locals.oneUser);
         if (response.rows[0]) {
             console.log('made it')
             const databasePw = res.locals.oneUser.password;
@@ -83,6 +84,7 @@ usersController.createUser = (req,res,next) => {
     .then(data => {
         console.log(data.rows)
         res.locals.newUser = data.rows
+        //make cookie?A??????
         return next()
     })
 }

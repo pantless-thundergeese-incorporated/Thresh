@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import signUpRequest from '../api/signUpRequest';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { useCookies, Cookies } from 'react-cookie';
 
 export const SignUp = () => {
   // useState to update and track the input fields from the signup page
@@ -11,18 +12,18 @@ export const SignUp = () => {
   const [lastName, setlastName] = useState('');
   const [userRole, setuserRole] = useState('');
   const [error, setError] = useState('');
+  // const [cookies, setCookie] = useCookies(['ID']);
+  const cookies = new Cookies();
+
   const navigate = useNavigate();
+  console.log('Cookie value?', cookies.get('1P_JAR'));
+
 
   // handle form submission 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    // signUpRequest(email, password, firstName, lastName, userRole)
-    //   .then(() => {
-    //     navigate('/dashboard');
-    //   })
-    //   .catch((err) => {
-    //     setError(err.message);
-    //   });/
+    setCookie("logged in", firstName);
+    // console.log('cookie?', setCookie("firstName"));
     try {
       const response = await axios.post('/api/users/signup', { firstName, lastName, password, userRole, email })
       console.log(response.data)
