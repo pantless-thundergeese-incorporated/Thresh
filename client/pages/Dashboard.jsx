@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Column from './Column.jsx';
+import { useLocation } from 'react-router-dom';
 
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
@@ -41,6 +42,12 @@ const onDragEnd = (result, columns, setColumns) => {
 };
 
 const Dashboard = () => {
+  const location = useLocation();
+  console.log('location: ', location);
+  const locationUserId = location.state.userId;
+  console.log('userId: ' + locationUserId);
+  const [userId, setUserId] = useState(locationUserId);
+  console.log('react State: ', userId);
   // change data to empty array when working with real data
   const [columns, setColumns] = useState({
     ['tasks']: {
@@ -69,7 +76,7 @@ const Dashboard = () => {
     try {
       const response = await axios.get('/api/tasks');
       console.log('RES DATAAA: ', response.data);
-      
+
       setColumns({
         ['tasks']: {
           name: 'To Do',

@@ -29,7 +29,11 @@ export const Login = () => {
       // const currUser =`${response.data.firstname} ${response.data.lastname}`
       // console.log(currUser)
       // setUser(currUser)
-      if (response) navigate('/dashboard');
+      if (response) {
+        console.log('login response: ', response.data);
+        // setUserId(response.data.id);
+        navigate('/dashboard', { state: { userId: response.data.id } });
+      }
     } catch (err) {
       setError('Invalid Email/Password');
       console.log('err:', err)
@@ -61,7 +65,7 @@ export const Login = () => {
       </form>
       <div>
         {/* <Link to={{pathname: '/dashboard'}} ><button>Dashboard</button></Link> */}
-        <br/>
+        <br />
         Don't have an account? <br />
         <Link to="/signup" className='underline text-tertiary-500'>Sign up right here!</Link>
       </div>
