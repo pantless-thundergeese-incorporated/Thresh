@@ -24,9 +24,6 @@ export const SignUp = () => {
     // console.log('cookie?', setCookie("firstName"));
     try {
       const response = await axios.post('/api/users/signup', { firstName, lastName, password, userRole, email })
-      // alert('response.id: ' + response);
-      // console.log('signup response is ', response.data[0].id);
-      // setUserId(response.data[0].id);
       if (response) navigate('/dashboard', { state: { userId: response.data[0].id } });
     } catch (err) {
       console.log(err)
