@@ -30,8 +30,7 @@ export const Login = () => {
       // console.log(currUser)
       // setUser(currUser)
       if (response) {
-        console.log('login response: ', response.data);
-        // setUserId(response.data.id);
+        // console.log('login response: ', response.data);
         navigate('/dashboard', { state: { userId: response.data.id } });
       }
     } catch (err) {

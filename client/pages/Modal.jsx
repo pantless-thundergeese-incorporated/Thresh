@@ -6,13 +6,26 @@ const Modal = ({
   handleTodoTitle,
   handleTodoText,
   handleSubmit,
+  handleDropdown,
   getTodos,
+  users
 }) => {
   const submitTask = () => {
     // handleSubmit();
     handleCloseModal();
     setTimeout(getTodos(), 200);
   };
+
+
+  function renderUsers() {
+    const userDropdown = [];
+    users.forEach(user => {
+      userDropdown.push(<option value={user.id}>{user.firstname} {user.lastname}</option>);
+    });
+    return userDropdown;
+  }
+
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -40,10 +53,13 @@ const Modal = ({
           className="text-secondary-500 bg-primary-500 ml-3 mr-16 rounded-lg px-3 py-1"
         />
       </label>
-
+      <select onChange={(e) => handleDropdown(e)}>
+        {/* fetch all users; store to state or something; map through fetched data and create option for each user; include some sort of eventhandler..... */}
+        {renderUsers()}
+      </select>
       <button
         className="bg-tertiary-500 py-1 mb-3"
-        // onClick={submitTask}
+      // onClick={submitTask}
       >
         Add Task
       </button>

@@ -20,7 +20,7 @@ router.delete('/delete', tasksController.deleteTask, (req, res, next) => {
   res.status(200).json(res.locals.deletedTask)
 });
 //UPDATE ONE TASK ROUTE
-router.patch('/:id', tasksController.updateTask, (req, res, next) => {
+router.patch('/update', tasksController.updateTask, (req, res, next) => {
   res.status(200).json(res.locals.updatedTask)
 });
 

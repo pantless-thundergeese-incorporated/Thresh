@@ -3,12 +3,17 @@ import { Draggable } from 'react-beautiful-dnd';
 import axios from 'axios';
 
 // const Todo = ({ deleteTodo, columns, setColumns, title, text, item, index, getTodos }) => {
-const Todo = ({ title, text, item, index, getTodos }) => {
+const Todo = ({ title, text, item, index, getTodos, users, modalUserId }) => {
   const deleteTodo = async (id) => {
-    console.log('deleted ', item.id);
+    console.log('deleted: ', item.id);
     await axios.delete(`/api/tasks/delete?id=${id}`);
     getTodos();
   };
+
+  function displayUser() {
+    const foundUser = users.find(user => user.id === modalUserId);
+    return <li>Assigned to: {foundUser.firstname} {foundUser.lastname}</li>;
+  }
 
   return (
     <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
@@ -33,6 +38,7 @@ const Todo = ({ title, text, item, index, getTodos }) => {
             <div className="text-lg break-words text-center -mt-2">{title}</div>
             <ul className="text-secondary-200 break-words text-left list-disc -mr-3">
               <li>{text}</li>
+              {displayUser()}
             </ul>
           </div>
         );

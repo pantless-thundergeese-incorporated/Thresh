@@ -4,10 +4,11 @@ import Todo from './Todo.jsx';
 import Modal from './Modal.jsx';
 import axios from 'axios';
 
-const Column = ({ colName, droppableId, column, getTodos }) => {
+const Column = ({ colName, droppableId, column, getTodos, users, userId }) => {
   const [newTodo, setNewTodo] = useState({
     title: '',
     text: '',
+    userId: userId,
   });
   const [modalActive, setModalActive] = useState(false);
 
@@ -25,8 +26,10 @@ const Column = ({ colName, droppableId, column, getTodos }) => {
       const response = await axios.post('/api/tasks/create', {
         title: newTodo.title,
         text: newTodo.text,
+        user_id: newTodo.userId
+        // user: newTodo.user
       });
-      setNewTodo((todo) => ({ ...todo, title: '', text: '' }));
+      setNewTodo((todo) => ({ ...todo, title: '', text: '', userId: userId }));
       handleCloseModal();        //CLOSE NEW TODO MODAL
       getTodos();                //REFRESH                      
     } catch (err) {
@@ -40,6 +43,11 @@ const Column = ({ colName, droppableId, column, getTodos }) => {
 
   const handleTodoText = (e) => {
     setNewTodo((todo) => ({ ...todo, text: e.target.value }));
+  };
+
+  const handleDropdown = (e) => {
+
+    setNewTodo((todo) => ({ ...todo, userId: e.target.value }));
   };
 
   return (
@@ -68,7 +76,10 @@ const Column = ({ colName, droppableId, column, getTodos }) => {
                   handleTodoTitle={handleTodoTitle}
                   handleTodoText={handleTodoText}
                   handleSubmit={handleSubmit}
+                  handleDropdown={handleDropdown}
                   getTodos={getTodos}
+                  users={users}
+
                 />
               )}
             </div>
@@ -81,7 +92,10 @@ const Column = ({ colName, droppableId, column, getTodos }) => {
                   title={item.title}
                   text={item.text}
                   getTodos={getTodos}
-                  // user={item.user}
+                  users={users}
+                  modalUserId={item.user_id}
+
+                // user={item.user}
                 />
               );
             })}
