@@ -7,6 +7,8 @@ module.exports = {
         'secondary-200': '#9c9c9c',
         'secondary-500': '#727271',
         'tertiary-500': '#1f74c5',
+
+
       },
     },
   },
