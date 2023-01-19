@@ -122,7 +122,7 @@ const Column = ({ colName, droppableId, column, getTodos, users, userId }) => {
                 />
               )}
             </div>
-            {column?.items?.map((item, index) => {
+            {column.items?.map((item, index) => {
               return (
                 <Todo
                   key={item.id}
