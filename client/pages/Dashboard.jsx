@@ -10,16 +10,16 @@ const onDragEnd = (result, columns, setColumns) => {
 
   if (source.droppableId !== destination.droppableId) {  //if destinaion is new location
     const sourceColumn = columns[source.droppableId]; //
-    console.log('sourceColumn: ', sourceColumn);
+    // console.log('sourceColumn: ', sourceColumn);
     const destColumn = columns[destination.droppableId];
-    console.log('destColumn: ', destColumn);
+    // console.log('destColumn: ', destColumn);
     const sourceItems = [...sourceColumn.items];
-    console.log('sourceItems: ', sourceItems);
+    // console.log('sourceItems: ', sourceItems);
     const destItems = [...destColumn.items];
-    console.log('destItems: ', destItems);
+    // console.log('destItems: ', destItems);
     const [removed] = sourceItems.splice(source.index, 1);
     removed.status_id = destColumn.status;
-    console.log('removed: ', removed);
+    // console.log('removed: ', removed);
     destItems.splice(destination.index, 0, removed);
 
     const updatedTask = {
