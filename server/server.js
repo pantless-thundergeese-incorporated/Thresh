@@ -5,6 +5,7 @@ const PORT = 3000;
 const userRouter = require('./routes/userRouter');
 const taskRouter = require('./routes/taskRouter');
 const commentRouter = require('./routes/commentRouter');
+const verifyRouter = require('./routes/verifyRouter');
 // const verifyRouter = require('./routes/verifyRouter');
 const cookieParser = require('cookie-parser');
 
@@ -23,6 +24,7 @@ app.use('/dist', express.static(path.join(__dirname, '../dist')));
 app.use('/users', userRouter);
 app.use('/tasks', taskRouter);
 app.use('/comments', commentRouter);
+app.use('/verify', verifyRouter);
 
 // GLOBAL ERROR HANDLER
 app.use((err, req, res, next) => {
@@ -37,6 +39,6 @@ app.use((err, req, res, next) => {
 });
 
 
-app.listen(PORT , () => { console.log(`Listening on port ${PORT}...`); }); //log conected to port
+app.listen(PORT, () => { console.log(`Listening on port ${PORT}...`); }); //log conected to port
 
 module.exports = app;
