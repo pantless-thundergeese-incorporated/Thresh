@@ -112,7 +112,10 @@ const Dashboard = (props) => {
       status: 4
     },
   });
+  
 
+  
+  
   // console.log('tasks: ', columns.tasks.items);
   const checkCookie = async () => {
     // console.log('checkCookie');
@@ -196,6 +199,7 @@ const Dashboard = (props) => {
           status: 4
         },
       });
+
       // filterByUser();
     } catch (err) {
       console.log(err);
@@ -204,19 +208,17 @@ const Dashboard = (props) => {
 
   
   return (
-    <div> 
-     {/* <div className="row h-5px  w-5/6 flex	align-content: baseline ">  */}
-     <div className="absolute top-20 left-20 my-2.5" > 
-        <div className="text-primary-500">
-          <p className="text-secondary-200">Filter tasks by user:</p>
-          <select onChange={(e) => handleDropdown(e)} className="bg-secondary-500  text-primary-500 ">
-            {/* fetch all users; store to state or something; map through fetched data and create option for each user; include some sort of eventhandler..... */}
-            {renderUsers()}
-          </select>
-        </div>
-      </div>
       <div className="row w-screen h-screen flex items-center justify-center my-1.5">
         <div className="grid grid-cols-4 w-5/6 h-3/4 gap-10 mt-20">
+         <div className="col-span-full" > 
+           <div className="text-primary-500">
+              <p className="text-secondary-200">Filter tasks by user:</p>
+              <select onChange={(e) => handleDropdown(e)} className="bg-secondary-500  text-primary-500 ">
+              {renderUsers()}
+              </select>
+           </div>
+          </div>
+        {/* <div className="col-span-full"> */}
           <DragDropContext
             onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
           >
@@ -237,7 +239,7 @@ const Dashboard = (props) => {
           </DragDropContext>
         </div>
       </div>
-    </div>
+    // </div>
   );
 };
 
