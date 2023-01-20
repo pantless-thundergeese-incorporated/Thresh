@@ -1,6 +1,6 @@
 import React from 'react';
 import HomePage from '../Images/HomePage.png';
-import HomePageText from '../Images/HomePageText.png';
+import HomePageText from '../Images/HATCH.png';
 
 export const Home = () => {
   return (

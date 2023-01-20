@@ -185,7 +185,7 @@ const Dashboard = () => {
               </select>
            </div>
           </div>
-        <div className="tile-maker">
+        {/* <div className="col-span-full"> */}
           <DragDropContext
             onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
           >
@@ -206,7 +206,7 @@ const Dashboard = () => {
           </DragDropContext>
         </div>
       </div>
-    </div>
+    // </div>
   );
 };
 

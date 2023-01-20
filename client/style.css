@@ -11,7 +11,9 @@ body,
   font-family: "DM Sans", sans-serif;
   color: #303d40;
   font-weight: bold;
-  background-color: #F6EEE5;
+  background-color: #E8E9ED;
+
+
 }
 
 @layer base {
