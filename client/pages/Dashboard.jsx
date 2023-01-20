@@ -69,6 +69,10 @@ const Dashboard = (props) => {
   const locationUserId = location?.state?.userId;
   const [userId, setUserId] = useState(locationUserId);
   const [users, setUsers] = useState([]);
+  //filtered users, set to array of all ids
+  const [targetUser, setTargetUser] = useState(0);
+
+  console.log('users: ', users);
   const navigate = useNavigate();
   console.log('DASHBOARD TOP userId: ', userId);
   // console.log(navigate);
@@ -79,6 +83,7 @@ const Dashboard = (props) => {
     try {
       const response = await axios.get('/api/users');
       setUsers(response.data);
+      
     }
     catch (err) {
       console.log(err);
@@ -137,14 +142,38 @@ const Dashboard = (props) => {
     }
   }, []);
 
+  useEffect(() => {
+    getTodos();
+  }, [targetUser])
+  
+  const handleDropdown = (e) => {
+    console.log('e.target.value' + e.target.value)
+    setTargetUser(e.target.value)
+  };
+
+  function renderUsers() {
+    const userDropdown = [<option value={0}>All Users</option>];
+    // pass userId to modal, make sure active user is at top
+    users.forEach(user => {
+      userDropdown.push(<option value={user.id}>{user.firstname} {user.lastname}</option>);
+    });
+    return userDropdown;
+  };
+
+
+
   const getTodos = async () => {
     try {
+      //gets all the tasks
       const response = await axios.get('/api/tasks');
-      // console.log('RES DATAAA: ', response.data);
-      const toDoTasks = response.data.filter(task => task.status_id === 1);
-      const inProgress = response.data.filter(task => task.status_id === 2);
-      const verified = response.data.filter(task => task.status_id === 3);
-      const completeTasks = response.data.filter(task => task.status_id === 4);
+      console.log('RES DATAAA: ', response.data);
+
+      //sort the tasks by column (and user???????)
+      // const toDoTasks = response.data.filter(task  => task.status_id === 1 && task.user_id === targetUser); 
+      const toDoTasks = response.data.filter(task  => targetUser != 0 ? task.status_id === 1 && task.user_id == targetUser : task.status_id === 1 && task.user_id != 0); 
+      const inProgress = response.data.filter(task => targetUser != 0 ? task.user_id == targetUser && task.status_id === 2 : task.user_id != 0 && task.status_id === 2);
+      const verified = response.data.filter(task =>  targetUser != 0 ? task.status_id === 3 && task.user_id == targetUser : task.status_id === 3 && task.user_id != 0);
+      const completeTasks = response.data.filter(task =>  targetUser != 0 ? task.status_id === 4 && task.user_id == targetUser : task.status_id === 4 && task.user_id != 0);
       setColumns({
         ['tasks']: {
           name: 'To Do',
@@ -167,33 +196,46 @@ const Dashboard = (props) => {
           status: 4
         },
       });
+      // filterByUser();
     } catch (err) {
       console.log(err);
     }
   };
 
-
+  
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
-      <div className="grid grid-cols-4 w-5/6 h-3/4 gap-10 mt-10">
-        <DragDropContext
-          onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
-        >
-          {Object.entries(columns).map(([columnId, column], index) => {
-            return (
-              <Column
-                colName={column.name}
-                droppableId={columnId}
-                key={columnId}
-                index={index}
-                column={column}
-                getTodos={getTodos}
-                users={users}
-                userId={userId}
-              />
-            );
-          })}
-        </DragDropContext>
+    <div> 
+     {/* <div className="row h-5px  w-5/6 flex	align-content: baseline ">  */}
+     <div className="absolute top-20 left-20 my-2.5" > 
+        <div className="text-primary-500">
+          <p className="text-secondary-200">Filter tasks by user:</p>
+          <select onChange={(e) => handleDropdown(e)} className="bg-secondary-500  text-primary-500 ">
+            {/* fetch all users; store to state or something; map through fetched data and create option for each user; include some sort of eventhandler..... */}
+            {renderUsers()}
+          </select>
+        </div>
+      </div>
+      <div className="row w-screen h-screen flex items-center justify-center my-1.5">
+        <div className="grid grid-cols-4 w-5/6 h-3/4 gap-10 mt-20">
+          <DragDropContext
+            onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+          >
+            {Object.entries(columns).map(([columnId, column], index) => {
+              return (
+                <Column
+                  colName={column.name}
+                  droppableId={columnId}
+                  key={columnId}
+                  index={index}
+                  column={column}
+                  getTodos={getTodos}
+                  users={users}
+                  userId={userId}
+                />
+              );
+            })}
+          </DragDropContext>
+        </div>
       </div>
     </div>
   );

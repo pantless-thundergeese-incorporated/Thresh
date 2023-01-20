@@ -13,7 +13,7 @@ const Todo = ({ title, text, id, item, index, getTodos, users, handleEditModal, 
 
   function displayUser() {
     const foundUser = users.find(user => user.id === modalId);
-    if (foundUser) return <li>Assigned to: {foundUser.firstname} {foundUser.lastname}</li>;
+    if (foundUser) return <p className="text-secondary-200 text-sm font-light">Assigned to: {foundUser.firstname} {foundUser.lastname}</p>;
   }
 
   return (
@@ -43,11 +43,9 @@ const Todo = ({ title, text, id, item, index, getTodos, users, handleEditModal, 
               <div>< RiEditLine /></div>
             </div>
 
-            <div className="text-lg text-center -mt-2">{title}</div>
-            <ul className="text-secondary-200 break-words text-left list-disc -mr-3">
-              <li>{text}</li>
+            <h1 className="text-lg text-center -mt-2">{title}</h1>
+            <h3 className="font-normal	 break-words text-left -mr-3">{text}</h3>
               {displayUser()}
-            </ul>
           </div>
         );
       }}
