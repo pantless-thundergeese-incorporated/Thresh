@@ -9,13 +9,13 @@ router.get('/', userController.getUsers, (req, res, next) => {
   res.status(200).json(res.locals.allUsers);
 });
 
-router.post('/login', userController.getUser, userController.setID,  (req, res, next) => {
+router.post('/login', userController.getUser, userController.setID, (req, res, next) => {
   res.status(200).json(res.locals.oneUser);
   // res.redirect(302, '/api/dashboard')
 });
 //CREATE ONE USER ROUTE
-router.post('/signup', userController.getBcrypt, userController.createUser, (req, res, next) => {
-  res.status(200).json(res.locals.newUser)
+router.post('/signup', userController.getBcrypt, userController.createUser, userController.setID, (req, res, next) => {
+  res.status(200).json(res.locals.oneUser)
 });
 //DELETE ONE USER ROUTE
 router.delete('/:id', userController.deleteUser, (req, res, next) => {
