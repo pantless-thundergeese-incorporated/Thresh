@@ -82,10 +82,11 @@ usersController.createUser = (req, res, next) => {
 
     db.query(text, values)
         .then(data => {
-            console.log(data.rows)
-            res.locals.newUser = data.rows
+            // console.log(data.rows)
+            console.log('createUser oneUser: ', data.rows[0]);
+            res.locals.oneUser = data.rows[0];
             //make cookie?A??????
-            return next()
+            return next();
         })
 }
 //DELETE ONE USER CONTROLLER
@@ -143,24 +144,34 @@ usersController.updateUser = (req, res, next) => {
 usersController.setID = (req, res, next) => {
     const id = res.locals.oneUser.id;
     console.log(id)
-    res.cookie('ID', id, { httpOnly: true });
+    res.cookie('ID', id, { httpOnly: true, expires: new Date(Date.now() + 100000) });
     return next()
 }
 
 
 // Verify user is not working correctly
-// usersController.verifyID = (req, res, next) => {
-//     console.log('req-cookies', req.cookies);
-//     console.log('hello from cookie');
-//     const { id } = req.cookies;
-//     const text = `SELECT * users WHERE ID = ${id}`
-//     db.query(text) 
-//         .then(data => {
-//             console.log('data', data);
-//             return res.redirect('/login');
-//         })
-//     return next()
-// }
+usersController.verifyID = (req, res, next) => {
+    console.log('entered USERCONTROLLER VERIFY ID')
+
+    console.log('req-cookies', req.cookies);
+    console.log('hello from cookie');
+    const { ID } = req.cookies;
+    // if (!ID) {
+    //     console.log('COOKIE NOT FOUND')
+    //     return res.redirect('/login');
+    // }
+    if (!ID) return next({ message: { err: 'No user ID' } });
+    const text = `SELECT * FROM users WHERE id = '${ID}'`
+    db.query(text)
+        .then(data => {
+            console.log('data', data.rows[0]);
+            res.locals.userId = data.rows[0].id;
+            console.log('res.locals: ', res.locals.userId);
+            // return res.redirect('/login');
+            return next();
+        })
+        .catch(e => console.log('Error at verifyId: ', e));
+}
 
 
 

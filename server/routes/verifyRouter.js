@@ -7,7 +7,7 @@ const router = express.Router();
 
 // GET ALL USERS ROUTE
 router.get('/', usersController.verifyID, (req, res, next) => {
-  res.status(200).json('login sucess');
+  res.status(200).json(res.locals.userId);
 });
 
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Column from './Column.jsx';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
@@ -62,20 +62,26 @@ const onDragEnd = (result, columns, setColumns) => {
   }
 };
 
-const Dashboard = () => {
+const Dashboard = (props) => {
+  console.log('dashboard');
+  const { setIsLoggedIn, isLoggedIn } = props;
   const location = useLocation();
-  const locationUserId = location.state.userId;
+  const locationUserId = location?.state?.userId;
   const [userId, setUserId] = useState(locationUserId);
   const [users, setUsers] = useState([]);
   //filtered users, set to array of all ids
   const [targetUser, setTargetUser] = useState(0);
-  
+
   console.log('users: ', users);
+  const navigate = useNavigate();
+  console.log('DASHBOARD TOP userId: ', userId);
+  // console.log(navigate);
+  // const { setIsLoggedIn, isLoggedIn } = navigate.state;
+  // console.log('users: ', users);
 
   const fetchUsers = async () => {
     try {
       const response = await axios.get('/api/users');
-      // console.log('fetched all users: ' + response.data)
       setUsers(response.data);
       
     }
@@ -106,13 +112,34 @@ const Dashboard = () => {
       status: 4
     },
   });
-  
-  //console.log('tasks: ', columns.tasks.items);
-  
-  
+
+  // console.log('tasks: ', columns.tasks.items);
+  const checkCookie = async () => {
+    // console.log('checkCookie');
+    try {
+      // console.log('checking cookie from dashboard');
+      const response = await axios.get('/api/verify');
+      // console.log('response.status ', response.status);
+      // console.log('response is ', response);
+      if (response.statusText === 'OK');
+    } catch (err) {
+      alert('Session expired. Please login again');
+      setIsLoggedIn(false);
+      navigate('/login');
+      console.log('err: ', err);
+    }
+  }
+
   useEffect(() => {
-    fetchUsers();
-    getTodos();
+    if (userId) {
+      setIsLoggedIn(true);
+      fetchUsers();
+      getTodos();
+      const intervalId = setInterval(checkCookie, 5000);
+      return () => clearInterval(intervalId);
+    } else {
+      navigate('/login');
+    }
   }, []);
 
   useEffect(() => {
