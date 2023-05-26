@@ -10,6 +10,10 @@
 #### Create organizations in to group users 
 #### Allow OAuth with github users
 
+###### Co-authored-by: Katie Sandfort katiesandfort@users.noreply.github.com
+###### Co-authored-by: Mark Bryan Mbryan13@users.noreply.github.com
+###### Co-authored-by: Bianca Hua biancahua@users.noreply.github.com
+###### Co-authored-by: Hannah Spencer hannahspen@users.noreply.github.com
 ###### Co-authored-by: dogenoh dogenoh@users.noreply.github.com
 ###### Co-authored-by: Roberto Meloni RobertoRueMeloni@users.noreply.github.com
 ###### Co-authored-by: Jack Sonoda jackksono@users.noreply.github.com
