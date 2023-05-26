@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import loginRequest from '../api/loginRequest';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { useCookies } from 'react-cookie';
 
 export const Login = () => {
   // useState to update and track the input fields from the login page
@@ -28,7 +29,10 @@ export const Login = () => {
       // const currUser =`${response.data.firstname} ${response.data.lastname}`
       // console.log(currUser)
       // setUser(currUser)
-      if (response) navigate('/dashboard');
+      if (response) {
+        // console.log('login response: ', response.data);
+        navigate('/dashboard', { state: { userId: response.data.id } });
+      }
     } catch (err) {
       setError('Invalid Email/Password');
       console.log('err:', err)
@@ -60,7 +64,7 @@ export const Login = () => {
       </form>
       <div>
         {/* <Link to={{pathname: '/dashboard'}} ><button>Dashboard</button></Link> */}
-        <br/>
+        <br />
         Don't have an account? <br />
         <Link to="/signup" className='underline text-tertiary-500'>Sign up right here!</Link>
       </div>
